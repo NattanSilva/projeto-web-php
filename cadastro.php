@@ -32,18 +32,29 @@
       <input required minLength="5" class="form-input" type="text" name="name" id="name" placeholder="Digite seu nome completo">
       <label class="form-label" for="email">E-mail</label>
       <input required class="form-input" type="email" name="email" id="email" placeholder="Digite seu e-mail">
+      <?php
+        require_once 'database.php';
+        $conn = mysqli_connect('localhost', 'root', '', 'openmusic');
+
+        if (!$conn) {
+          echo "<script>console.log('Connection failed: $conn->connect_error')</script>";
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          if ( validate_unique_email($conn, $_POST['email']) ) {
+            echo "<span class='error-message'>*Email ja cadastrado!*</span>";
+          } else{
+            $query = "INSERT INTO users (name, email, password) VALUES ('{$_POST['name']}', '{$_POST['email']}', '{$_POST['password']}')";
+            $result = mysqli_query($conn, $query);
+            header('Location: ./login.php');
+            exit;
+          }
+        }
+      ?>
       <label class="form-label" for="password">Senha</label>
       <input required minLength="8" class="form-input" type="password" name="password" id="password" placeholder="Digite sua senha">
       <button class="form-btn" type="submit">Cadastrar</button>
     </form>
-    <?php
-      $connection = mysqli_connect('localhost', 'root', '', 'openmusic');
-      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $query = "INSERT INTO users (name, email, password) VALUES ('{$_POST['name']}', '{$_POST['email']}', '{$_POST['password']}')";
-        $result = mysqli_query($connection, $query);
-        header('Location: ./login.php');
-      }
-    ?>
   </main>
 </body>
 </html>

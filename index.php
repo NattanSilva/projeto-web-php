@@ -16,6 +16,10 @@
 
     $conn = mysqli_connect('localhost', 'root', '', 'openmusic');
 
+    if (!$conn) {
+      echo "<script>console.log('Connection failed: $conn->connect_error')</script>";
+    }
+
     create_user_table($conn);
     create_music_table($conn);
   ?>
@@ -24,12 +28,15 @@
       <h1 class="logo"><span>O</span>pen <span>M</span>usic</h1>
       <ul id="menu-navigation">
         <?php
-          if(false) {
+          session_start();
+          $icon = strtoupper(substr($_SESSION["username"], 0, 1));
+          
+          if($_SESSION["status"] == "logged") {
             echo "
               <li class='user-box'>
-                <h3>Natan Silva</h3>
+                <h3>$_SESSION[username]</h3>
                 <h3  class='user-icon'>
-                  N
+                  $icon
                 </h3>
               </li>
             ";
