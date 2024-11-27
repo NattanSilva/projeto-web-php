@@ -29,9 +29,9 @@
     <form action="" method="post">
       <h2 class="form-title">Login</h2>
       <label class="form-label" for="name">E-mail</label>
-      <input class="form-input" name="email" id="email" type="email" placeholder="Digite seu e-mail">
+      <input required class="form-input" name="email" id="email" type="email" placeholder="Digite seu e-mail">
       <label class="form-label" for="name">Senha</label>
-      <input class="form-input" name="password" id="password" type="password" placeholder="Digite sua senha">
+      <input required class="form-input" name="password" id="password" type="password" placeholder="Digite sua senha">
       <button class="form-btn" type="submit">Entrar</button>
     </form>
     <?php
